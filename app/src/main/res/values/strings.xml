@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Quiz</string>
+    <string name="quiz_app">Quiz App</string>
+    <string name="welcome">Welcome</string>
+    <string name="please_enter_your_name">Please Enter your Name</string>
+    <string name="name">Name</string>
+    <string name="start">Start</string>
+    <string name="what_is_the_capital_of_country">What is the Capital of country?</string>
+    <string name="_0_4">0/4</string>
+    <string name="google">Google</string>
+    <string name="apple">Apple</string>
+    <string name="microsoft">Microsoft</string>
+    <string name="openai">OpenAI</string>
+    <string name="submit">Submit</string>
+    <string name="finish">FINISH</string>
+    <string name="image">image</string>
+    <string name="congratulations">Congratulations!</string>
+</resources>
