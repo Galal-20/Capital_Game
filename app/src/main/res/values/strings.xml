@@ -15,4 +15,6 @@
     <string name="finish">FINISH</string>
     <string name="image">image</string>
     <string name="congratulations">Congratulations!</string>
+    <string name="result">Result</string>
+    <string name="store">Store</string>
 </resources>

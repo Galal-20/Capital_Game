@@ -1,6 +1,8 @@
 package com.example.quiz
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.Typeface
 import android.media.tv.TvView
@@ -17,6 +19,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 
 class QuestionActivity : AppCompatActivity(), View.OnClickListener {
+    private lateinit var sharedPreferences : SharedPreferences
     private lateinit var progressBar:ProgressBar
     private lateinit var submit : Button
     private lateinit var tvProgress: TextView
@@ -36,18 +39,12 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
 
+        sharedPreferences = getSharedPreferences("QuizPrefs", MODE_PRIVATE)
+
 
         mUsername = intent.getStringExtra(Constants.USER_NAME)
+        binding()
 
-        progressBar = findViewById(R.id.progressBar)
-        tvProgress = findViewById(R.id.tv_progress)
-        tvQuestion = findViewById(R.id.tv_question)
-        ivImage = findViewById(R.id.image_iv)
-        tvOne = findViewById(R.id.tv_option_one)
-        tvTwo = findViewById(R.id.tv_option_two)
-        tvThree = findViewById(R.id.tv_option_three)
-        tvFour = findViewById(R.id.tv_option_four)
-        submit = findViewById(R.id.submit)
 
         mQuestionList = Constants.getquestions()
         setQuestion()
@@ -62,6 +59,19 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
 
 
     }
+
+    private fun binding(){
+        progressBar = findViewById(R.id.progressBar)
+        tvProgress = findViewById(R.id.tv_progress)
+        tvQuestion = findViewById(R.id.tv_question)
+        ivImage = findViewById(R.id.image_iv)
+        tvOne = findViewById(R.id.tv_option_one)
+        tvTwo = findViewById(R.id.tv_option_two)
+        tvThree = findViewById(R.id.tv_option_three)
+        tvFour = findViewById(R.id.tv_option_four)
+        submit = findViewById(R.id.submit)
+    }
+    @SuppressLint("SetTextI18n")
     private fun setQuestion(){
         val question = mQuestionList!![mCurrentPosition-1]
 
@@ -74,7 +84,7 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
         progressBar.progress = mCurrentPosition
         tvProgress.text = "$mCurrentPosition" + "/" + progressBar.max
 
-        tvQuestion.text = question!!.question
+        tvQuestion.text = question.question
         ivImage.setImageResource(question.image)
         tvOne.text = question.optionOne
         tvTwo.text = question.optionTwo
@@ -114,6 +124,12 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
                             it.putExtra(Constants.TOTAL_QUESTIONS, mQuestionList!!.size)
                             startActivity(it)
                             finish()
+
+                            // Save name and score to SharedPreferences
+                            val editor = sharedPreferences.edit()
+                            editor.putString("name", mUsername)
+                            editor.putInt("score", mCorrectAnswer)
+                            editor.apply()
                         }
                     }
                     }
